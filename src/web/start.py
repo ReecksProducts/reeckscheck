@@ -18,9 +18,6 @@ def search_files_with_names(root_paths, target_names):
         # Проходим по всем файлам и подкаталогам в указанном каталоге
         for root, dirs, files in os.walk(root_path):
             for file in files:
-                # Выводим сообщение о начале поиска для каждого файла
-                print(f"Ищем {file} - подождите, пожалуйста...")
-
                 # Проверяем, содержится ли хотя бы одно из заданных имен в имени файла (без учета регистра)
                 if any(name.lower() in file.lower() for name in target_names):
                     file_path = os.path.join(root, file)
