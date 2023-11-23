@@ -34,7 +34,7 @@ root_paths = ["C:\\", "D:\\"]
 
 # Указываем имена файлов для поиска
 target_names = ["Impact", "Aristois", "XRAY", "Wurst",
-                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Sigma", "Expensive", "Gumbaloff", "Client", "Recode", "celka"]
+                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Sigma", "Expensive", "Gumbaloff", "Recode", "celka"]
 
 # Вызываем функцию для поиска на указанных дисках
 search_files_with_names(root_paths, target_names)

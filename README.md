@@ -18,6 +18,6 @@ Sigma
 Expensive
 Gumbaloff
 Celestial Recode
-Файлы что содержат Hack и Client
+Файлы что содержат Hack
 </pre>
 Каждое обновление список расширяеться ❤
