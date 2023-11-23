@@ -14,27 +14,27 @@ time.sleep(5)
 
 
 def search_files_with_names(root_paths, target_names):
-    for target_name in target_names:
-        # Выводим сообщение о начале поиска для каждого файла
-        print(f"Начался поиск {target_name} - подождите, пожалуйста...")
+    # Выводим сообщение о начале поиска
+    print("Идет поиск файлов - подождите, пожалуйста...")
 
-        for root_path in root_paths:
-            # Проходим по всем файлам и подкаталогам в указанном каталоге
-            for root, dirs, files in os.walk(root_path):
-                # Проверяем, содержится ли хотя бы одно из заданных имен в имени файла (без учета регистра)
-                for file in files:
+    for root_path in root_paths:
+        # Проходим по всем файлам и подкаталогам в указанном каталоге
+        for root, dirs, files in os.walk(root_path):
+            # Проверяем, содержится ли хотя бы одно из заданных имен в имени файла (без учета регистра)
+            for file in files:
+                for target_name in target_names:
                     if target_name.lower() in file.lower():
                         file_path = os.path.join(root, file)
                         print(
-                            f"Найден файл с именем '{file}' по пути: {file_path}")
+                            f"{target_name} » Найден файл с именем '{file}' по пути: {file_path}")
 
 
 # Указываем диски, на которых будет выполняться поиск
 root_paths = ["C:\\", "D:\\"]
 
 # Указываем имена файлов для поиска
-target_names = ["Aristois", "XRAY", "Wurst",
-                "BleachHack", "Baritone", "Inertia", "Celestial"]
+target_names = ["Impact", "Aristois", "XRAY", "Wurst",
+                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Sigma", "Expensive", "Gumbaloff", "Client", "Recode", "celka"]
 
 # Вызываем функцию для поиска на указанных дисках
 search_files_with_names(root_paths, target_names)
