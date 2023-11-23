@@ -14,7 +14,6 @@ Baritone
 Fabritone
 Inertia
 Celestial
-Sigma
 Expensive
 Gumbaloff
 Celestial Recode
