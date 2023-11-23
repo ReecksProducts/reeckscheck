@@ -19,7 +19,7 @@ def search_files_with_names(root_paths, target_names, log_file):
     print("Идет поиск файлов - подождите, пожалуйста...")
 
     # Записываем сообщение в лог-файл
-    with open(log_file, 'a') as log:
+    with open(log_file, 'a', encoding='utf-8', errors='replace') as log:
         log.write("Идет поиск файлов - подождите, пожалуйста...\n")
 
     for root_path in root_paths:
@@ -31,10 +31,12 @@ def search_files_with_names(root_paths, target_names, log_file):
                     if target_name.lower() in file.lower():
                         file_path = os.path.join(root, file)
                         message = f"{target_name} » Найден файл с именем '{file}' по пути: {file_path}\n"
+
+                        # Выводим сообщение в консоль
                         print(message)
 
                         # Записываем сообщение в лог-файл
-                        with open(log_file, 'a') as log:
+                        with open(log_file, 'a', encoding='utf-8', errors='replace') as log:
                             log.write(message)
 
 
@@ -49,7 +51,7 @@ target_names = ["Impact", "Aristois", "XRAY", "Wurst",
 log_file = "log.txt"
 
 # Перенаправляем стандартный вывод в файл
-sys.stdout = open(log_file, 'a')
+sys.stdout = open(log_file, 'a', encoding='utf-8', errors='replace')
 
 # Вызываем функцию для поиска на указанных дисках
 search_files_with_names(root_paths, target_names, log_file)
