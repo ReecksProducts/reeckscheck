@@ -14,10 +14,10 @@ time.sleep(5)
 
 
 def search_files_with_names(root_paths, target_names):
-    for root_path in root_paths:
-        # Проходим по всем файлам и подкаталогам в указанном каталоге
-        for root, dirs, files in os.walk(root_path):
-            for target_name in target_names:
+    for target_name in target_names:
+        for root_path in root_paths:
+            # Проходим по всем файлам и подкаталогам в указанном каталоге
+            for root, dirs, files in os.walk(root_path):
                 # Выводим сообщение о начале поиска для каждого файла
                 print(
                     f"Начался поиск {target_name} - подождите, пожалуйста...")
