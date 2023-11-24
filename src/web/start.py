@@ -41,7 +41,7 @@ root_paths = ["C:\\", "D:\\"]
 
 # Указываем имена файлов для поиска
 target_names = ["Impact", "Aristois", "XRAY", "Wurst",
-                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "Recode", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient", "Liquid Bounce", "Matix", "FATAL", "ZAMOROZKA", "NEVERHOOK", "Flux"]
+                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "Recode", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient", "Liquid Bounce", "Matix", "FATAL", "ZAMOROZKA", "NEVERHOOK", "Flux", "Xatz", "Exist", "AVALON", "DEADCODE", "Nursultan", "Boze", "EXCELLENT", "Wild"]
 
 # Указываем имя лог-файла
 log_file = "log.txt"

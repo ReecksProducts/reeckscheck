@@ -29,6 +29,14 @@ Fatal Client
 Zamorozka
 Neverhook
 Flux
+Xatz Client
+Exist
+Avalon
+DeadCode
+Nursultan
+Boze Client
+Exelent
+Wild Client
 Файлы что содержат Hack
 </pre>
 Каждое обновление список расширяеться ❤
