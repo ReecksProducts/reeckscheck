@@ -1,5 +1,6 @@
 <h4 align="center">⚠ Программа в разработке, могут быть баги ⚠</h4>
 <h1 align="center">Reecks Checker 🖥</h1>
+<marquee align="center">⚠ Программа в разработке, могут быть баги ⚠</marquee>
 <h2 align="center">✅ Поиск установленых на компьютер читов для игры Minecraft</h2>
 <h3 align="center">✅ Ссылки</h3>
 <a href="https://github.com/ReecksProducts/reeckscheck/blob/main/src/web/start.py" align="center">Главый файл с чекером</a>
