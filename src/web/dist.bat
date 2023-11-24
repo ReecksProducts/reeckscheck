@@ -1,0 +1,1 @@
+pyinstaller -F -i "D:\Reeckschecker\reeckscheck\src\web\icon.ico" start.py
