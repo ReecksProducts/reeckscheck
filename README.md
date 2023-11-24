@@ -3,7 +3,8 @@
 <h2 align="center">✅ Поиск установленых на компьютер читов для игры Minecraft</h2>
 <button align="center"><a href="https://discord.gg/MsVdJEvpkx" align="center">Discord Comunity</a></button>
 <h3 align="center">✅ Где/как скачать?</h3>
-<a href="https://github.com/ReecksProducts/reeckscheck/releases/tag/reeckscheck" align="center">Скачать установщик</a>
+<a href="https://github.com/ReecksProducts/reeckscheck/releases/tag/reeckscheck" align="center">Скачать установщик (нажмите на setup.exe
+)</a>
 <p>1. Установите программу с помощью установщика (ссылка выше)</p>
 <p>2. Запустите ярлык на рабочем столе от имени администратора</p>
 <p>3. Пользуйтесь</p>
