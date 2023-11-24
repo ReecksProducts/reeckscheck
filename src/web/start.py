@@ -14,7 +14,7 @@ print("Начало через 5 секунд")
 time.sleep(5)
 
 
-def search_files_with_names(root_paths, target_names, log_file):
+def search_exe_jar_files(root_paths, target_names, log_file):
     # Открываем лог-файл для добавления (mode='a') с использованием utf-8
     with open(log_file, 'a', encoding='utf-8', errors='replace') as log:
         # Выводим сообщение о начале поиска в консоль и добавляем его в лог
@@ -30,10 +30,12 @@ def search_files_with_names(root_paths, target_names, log_file):
                     for target_name in target_names:
                         if target_name.lower() in file.lower():
                             file_path = os.path.join(root, file)
-                            # Выводим сообщение в консоль и добавляем его в лог
-                            message = f"{target_name} » Найден файл с именем '{file}' по пути: {file_path}"
-                            print(message)
-                            log.write(message + '\n')
+                            # Дополнительно проверяем расширение файла
+                            if file.lower().endswith(('.exe', '.jar')):
+                                # Выводим сообщение в консоль и добавляем его в лог
+                                message = f"{target_name} » Найден файл с именем '{file}' по пути: {file_path}"
+                                print(message)
+                                log.write(message + '\n')
 
 
 # Указываем диски, на которых будет выполняться поиск
@@ -47,7 +49,7 @@ target_names = ["Impact", "Aristois", "XRAY", "Wurst",
 log_file = "log.txt"
 
 # Вызываем функцию для поиска на указанных дисках
-search_files_with_names(root_paths, target_names, log_file)
+search_exe_jar_files(root_paths, target_names, log_file)
 
 
 print("⚠ Проверка окончена ⚠")
