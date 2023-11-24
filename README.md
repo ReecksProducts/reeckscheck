@@ -1,7 +1,6 @@
 <h4 align="center">⚠ Программа в разработке, могут быть баги ⚠</h4>
 <h1 align="center">Reecks Checker 🖥</h1>
 <h2 align="center">✅ Поиск установленых на компьютер читов для игры Minecraft</h2>
-<button align="center"><a href="https://discord.gg/MsVdJEvpkx" align="center">Discord Comunity</a></button>
 <h3 align="center">✅ Где/как скачать?</h3>
 <a href="https://github.com/ReecksProducts/reeckscheck/releases/tag/reeckscheck" align="center">Скачать установщик (нажмите на setup.exe
 )</a>
