@@ -2,7 +2,7 @@
 <h1 align="center">Reecks Checker 🖥</h1>
 <h2 align="center">✅ Поиск установленых на компьютер читов для игры Minecraft</h2>
 <h3 align="center">✅ Где/как скачать?</h3>
-<a href="https://github.com/ReecksProducts/reeckscheck/releases/tag/reeckscheck" align="center">Скачать установщик (нажмите на setup.exe
+<a href="https://github.com/ReecksProducts/reeckscheck/releases/download/reeckscheck/setup.exe" align="center">Скачать установщик (нажмите на setup.exe
 )</a>
 <p>1. Установите программу с помощью установщика (ссылка выше)</p>
 <p>2. Запустите ярлык на рабочем столе <b>от имени администратора</b></p>
