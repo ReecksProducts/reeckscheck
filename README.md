@@ -43,6 +43,7 @@ Nursultan
 Boze Client
 Exelent
 Wild Client
+Autoclicker
 Файлы что содержат Hack
 </pre>
 Каждое обновление список расширяеться ❤
