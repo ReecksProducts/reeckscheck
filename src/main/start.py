@@ -1,6 +1,10 @@
 import os
 import sys
 import time
+import tkinter as tk
+from tkinter import ttk, scrolledtext, filedialog
+from ttkthemes import ThemedTk
+import threading
 
 print("")
 print("██████╗ ███████╗███████╗ ██████╗██╗  ██╗███████╗     ██████╗██╗  ██╗███████╗ ██████╗██╗  ██╗")
@@ -14,43 +18,101 @@ print("Начало через 5 секунд")
 time.sleep(5)
 
 
-def search_exe_jar_files(root_paths, target_names, log_file):
-    # Открываем лог-файл для добавления (mode='a') с использованием utf-8
-    with open(log_file, 'a', encoding='utf-8', errors='replace') as log:
-        # Выводим сообщение о начале поиска в консоль и добавляем его в лог
-        message = "Идет поиск файлов - подождите, пожалуйста..."
-        print(message)
-        log.write(message + '\n')
+class FileSearchApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title('Reecks Check')
 
-        for root_path in root_paths:
-            # Проходим по всем файлам и подкаталогам в указанном каталоге
-            for root, dirs, files in os.walk(root_path):
-                # Проверяем, содержится ли хотя бы одно из заданных имен в имени файла (без учета регистра)
-                for file in files:
-                    for target_name in target_names:
-                        if target_name.lower() in file.lower():
-                            file_path = os.path.join(root, file)
-                            # Дополнительно проверяем расширение файла
-                            if file.lower().endswith(('.exe', '.jar')):
-                                # Выводим сообщение в консоль и добавляем его в лог
-                                message = f"{target_name} » Найден файл с именем '{file}' по пути: {file_path}"
-                                print(message)
-                                log.write(message + '\n')
+        # Путь к иконке
+        icon_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), 'icon.ico')
+
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.root.iconbitmap(icon_path)  # Добавление иконки
+
+        self.target_names = ["Impact", "Aristois", "Xray", "Wurst", "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient",
+                             "Liquid Bounce", "Matix", "FATAL", "ZAMOROZKA", "NEVERHOOK", "Flux", "Xatz", "Exist", "AVALON", "DEADCODE", "Nursultan", "Boze", "EXCELLENT", "Wild", "Calestial", "X-ray", "XRAY", "xray", "cheats", "cheat", "autoclicker"]
+        self.log_file = "log.txt"
+        # Переменная для хранения выбранной темы
+        self.theme_var = tk.StringVar(value="arc")
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.root.set_theme(self.theme_var.get())  # Установка темы ttkthemes
+
+        self.label = ttk.Label(
+            self.root, text='Reecks Check', font=('Helvetica', 16, 'bold'))
+        self.label.grid(row=0, column=0, columnspan=2,
+                        pady=(10, 20), sticky='w')
+
+        self.log_text = scrolledtext.ScrolledText(
+            self.root, wrap=tk.WORD, width=60, height=15, font=('Helvetica', 12))
+        self.log_text.grid(row=1, column=0, columnspan=2, pady=10, padx=10)
+
+        self.search_button = ttk.Button(
+            self.root, text='Начать поиск', command=self.start_search, style='TButton')
+        self.search_button.grid(
+            row=2, column=0, pady=(0, 10), padx=10, sticky='w')
+
+        self.browse_button = ttk.Button(
+            self.root, text='Обзор', command=self.browse_folder, style='TButton')
+        self.browse_button.grid(row=2, column=1, pady=(
+            0, 10), padx=(0, 10), sticky='e')
+
+        # Кнопка для открытия окна настроек
+        self.settings_button = ttk.Button(
+            self.root, text='Настройки', command=self.open_settings, style='TButton')
+        self.settings_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+        # Определение стилей
+        style = ttk.Style(self.root)
+        style.configure('TButton', font=('Helvetica', 12), padding=10)
+
+    def start_search(self):
+        # Очистка текстового поля перед началом поиска
+        self.log_text.delete(1.0, tk.END)
+        self.log_text.insert(
+            tk.END, 'Идет поиск файлов - подождите, пожалуйста...\n')
+
+    def browse_folder(self):
+        folder = filedialog.askdirectory(title="Выбрать папку")
+        if folder:
+            self.log_text.delete(1.0, tk.END)
+            self.log_text.insert(tk.END, f"Выбрана папка: {folder}\n")
+
+    def open_settings(self):
+        settings_window = tk.Toplevel(self.root)
+        settings_window.title("Настройки")
+
+        # Надпись
+        ttk.Label(settings_window, text="Выберите тему:").grid(
+            row=0, column=0, pady=10)
+
+        # Выпадающий список с выбором тем
+        theme_combobox = ttk.Combobox(settings_window, textvariable=self.theme_var,
+                                      values=["arc", "breeze", "equilux", "yaru"])
+        theme_combobox.grid(row=0, column=1, pady=10)
+        theme_combobox.set(self.theme_var.get())  # Установка текущей темы
+
+        # Кнопка "Применить изменения"
+        apply_button = ttk.Button(
+            settings_window, text="Применить изменения", command=self.apply_settings)
+        apply_button.grid(row=1, column=0, columnspan=2, pady=10)
+
+    def apply_settings(self):
+        selected_theme = self.theme_var.get()
+        self.root.set_theme(selected_theme)
+        print(f"Выбрана тема: {selected_theme}")
+
+    def on_close(self):
+        self.root.destroy()
 
 
-# Указываем диски, на которых будет выполняться поиск
-root_paths = ["C:\\", "D:\\"]
-
-# Указываем имена файлов для поиска
-target_names = ["Impact", "Aristois", "Xray", "Wurst",
-                "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient", "Liquid Bounce", "Matix", "FATAL", "ZAMOROZKA", "NEVERHOOK", "Flux", "Xatz", "Exist", "AVALON", "DEADCODE", "Nursultan", "Boze", "EXCELLENT", "Wild", "Calestial", "X-ray", "XRAY", "xray", "cheats", "cheat", "autoclicker"]
-
-# Указываем имя лог-файла
-log_file = "log.txt"
-
-# Вызываем функцию для поиска на указанных дисках
-search_exe_jar_files(root_paths, target_names, log_file)
-
+if __name__ == '__main__':
+    root = ThemedTk(theme="arc")  # Создание экземпляра ThemedTk с темой "arc"
+    app = FileSearchApp(root)
+    root.mainloop()
 
 print("⚠ Проверка окончена ⚠")
 print("⚠ Закрытие через 3 секунды ⚠")
