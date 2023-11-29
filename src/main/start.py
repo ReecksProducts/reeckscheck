@@ -6,17 +6,6 @@ from tkinter import ttk, scrolledtext, filedialog
 from ttkthemes import ThemedTk
 import threading
 
-print("")
-print("██████╗ ███████╗███████╗ ██████╗██╗  ██╗███████╗     ██████╗██╗  ██╗███████╗ ██████╗██╗  ██╗")
-print("██╔══██╗██╔════╝██╔════╝██╔════╝██║ ██╔╝██╔════╝    ██╔════╝██║  ██║██╔════╝██╔════╝██║ ██╔╝")
-print("██████╔╝█████╗  █████╗  ██║     █████╔╝ ███████╗    ██║     ███████║█████╗  ██║     █████╔╝ ")
-print("██╔══██╗██╔══╝  ██╔══╝  ██║     ██╔═██╗ ╚════██║    ██║     ██╔══██║██╔══╝  ██║     ██╔═██╗ ")
-print("██║  ██║███████╗███████╗╚██████╗██║  ██╗███████║    ╚██████╗██║  ██║███████╗╚██████╗██║  ██╗")
-print("╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝     ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝")
-print("Программа для проверки на читы by ReecksJres")
-print("Начало через 5 секунд")
-time.sleep(5)
-
 
 class FileSearchApp:
     def __init__(self, root):
@@ -24,8 +13,7 @@ class FileSearchApp:
         self.root.title('Reecks Check')
 
         # Путь к иконке
-        icon_path = os.path.join(os.path.dirname(
-            os.path.realpath(__file__)), 'icon.ico')
+        icon_path = 'D:/Reeckschecker/reeckscheck/src/main/icon.ico'
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
         self.root.iconbitmap(icon_path)  # Добавление иконки
@@ -47,7 +35,7 @@ class FileSearchApp:
                         pady=(10, 20), sticky='w')
 
         self.log_text = scrolledtext.ScrolledText(
-            self.root, wrap=tk.WORD, width=60, height=15, font=('Helvetica', 12))
+            self.root, wrap=tk.WORD, width=60, height=15, font=('Helvetica', 12), state='disabled')  # Добавлен state='disabled'
         self.log_text.grid(row=1, column=0, columnspan=2, pady=10, padx=10)
 
         self.search_button = ttk.Button(
@@ -71,15 +59,24 @@ class FileSearchApp:
 
     def start_search(self):
         # Очистка текстового поля перед началом поиска
+        self.log_text.configure(state='normal')  # Разрешаем редактирование
         self.log_text.delete(1.0, tk.END)
         self.log_text.insert(
             tk.END, 'Идет поиск файлов - подождите, пожалуйста...\n')
+        self.log_text.configure(state='disabled')  # Запрещаем редактирование
+
+        # Запуск поиска в отдельном потоке
+        search_thread = threading.Thread(target=self.perform_search)
+        search_thread.start()
 
     def browse_folder(self):
         folder = filedialog.askdirectory(title="Выбрать папку")
         if folder:
+            self.log_text.configure(state='normal')  # Разрешаем редактирование
             self.log_text.delete(1.0, tk.END)
             self.log_text.insert(tk.END, f"Выбрана папка: {folder}\n")
+            # Запрещаем редактирование
+            self.log_text.configure(state='disabled')
 
     def open_settings(self):
         settings_window = tk.Toplevel(self.root)
@@ -107,6 +104,21 @@ class FileSearchApp:
 
     def on_close(self):
         self.root.destroy()
+
+    def perform_search(self):
+        for root, dirs, files in os.walk('/'):
+            for file in files:
+                for target_name in self.target_names:
+                    if target_name.lower() in file.lower() and file.lower().endswith(('.exe', '.jar')):
+                        file_path = os.path.join(root, file)
+                        message = f"{target_name} » Найден файл с именем '{file}' по пути: '{file_path}'\n"
+                        self.root.after(0, self.update_log, message)
+
+    def update_log(self, message):
+        self.log_text.configure(state='normal')  # Разрешаем редактирование
+        self.log_text.insert(tk.END, message)
+        self.log_text.configure(state='disabled')  # Запрещаем редактирование
+        self.log_text.update_idletasks()
 
 
 if __name__ == '__main__':

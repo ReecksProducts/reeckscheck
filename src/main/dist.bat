@@ -1,1 +1,1 @@
-pyinstaller -F -i "D:\Reeckschecker\reeckscheck\src\web\icon.ico" start.py
+pyinstaller --onefile --windowed --icon=icon.ico start.py
