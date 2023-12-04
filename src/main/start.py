@@ -12,11 +12,7 @@ class FileSearchApp:
         self.root = root
         self.root.title('Reecks Check')
 
-        # Путь к иконке
-        icon_path = 'D:/Reeckschecker/reeckscheck/src/main/icon.ico'
-
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
-        self.root.iconbitmap(icon_path)  # Добавление иконки
 
         self.target_names = ["Impact", "Aristois", "Xray", "Wurst", "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient",
                              "Liquid Bounce", "Matix", "FATAL", "ZAMOROZKA", "NEVERHOOK", "Flux", "Xatz", "Exist", "AVALON", "DEADCODE", "Nursultan", "Boze", "EXCELLENT", "Wild", "Calestial", "X-ray", "XRAY", "xray", "cheats", "cheat", "autoclicker"]
