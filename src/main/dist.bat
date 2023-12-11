@@ -1,1 +1,1 @@
-pyinstaller --onefile --windowed --icon=icon.ico start.py
+pyinstaller --onefile --windowed start.py
