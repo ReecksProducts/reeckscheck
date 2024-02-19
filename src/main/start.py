@@ -1,53 +1,61 @@
 import os
 import threading
+import psutil
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 
 # Список ключевых слов
 keywords_list = ["Impact", "Aristois", "Xray", "Wurst", "Hack", "Baritone", "Fabritone", "Inertia", "Celestial", "Expensive", "Gumbaloff", "celka", "Ares", "Sigmaclient", "Salhack", "KAMI", "WWE", "SkillClient",
                  "Liquid Bounce", "Matix", "FATAL", "ZAMO", "NEVERHOOK", "Flux", "Xatz", "Exist", "AVALON", "DEADCODE", "Nursultan", "Boze", "EXCELLENT", "Wild", "Calestial", "X-ray", "XRAY", "xray", "cheats", "cheat", "autoclicker"]
 
-# Системные папки для игнорирования
-system_folders = {"Windows", "adobeTemp", "GenArts", "EasyAntiCheat", "Razer",
-                  "BorisFX", "Microsoft", "Fonts", "Python", "Roblox", "VEGAS Pro", "curseforge", "LCU", "Adobe", "Program Files", "Program Files (x86)"}
+# Глобальные переменные
+searching = False
+search_thread = None
 
 
-def search_files(keywords):
+def search_files():
+    global searching
+    searching = True
     results_list.delete(0, tk.END)
-    found_items = 0
     for drive in range(ord('A'), ord('Z')+1):
         drive_letter = chr(drive)
         root_path = f"{drive_letter}:\\"
         if os.path.exists(root_path):
             for root, dirs, files in os.walk(root_path):
-                # Проверяем, не является ли текущая папка системной
-                if os.path.basename(root) in system_folders:
-                    continue
+                if not searching:
+                    return
                 for file in files:
-                    if any(keyword.lower() in file.lower() for keyword in keywords):
+                    if any(keyword.lower() in file.lower() for keyword in keywords_list):
                         results_list.insert(tk.END, os.path.join(root, file))
-                        found_items += 1
                 for dir in dirs:
-                    if any(keyword.lower() in dir.lower() for keyword in keywords):
+                    if any(keyword.lower() in dir.lower() for keyword in keywords_list):
                         results_list.insert(tk.END, os.path.join(root, dir))
-                        found_items += 1
-    messagebox.showinfo(
-        "Поиск завершен", f"Найдено файлов и папок: {found_items}")
+    ram_usage = psutil.virtual_memory().used / (1024 * 1024)  # RAM usage in MB
+    status_var.set(f"Поиск завершен | Нагрузка RAM: {ram_usage:.2f} мб")
 
 
 def start_search():
+    global search_thread
+    if search_thread and search_thread.is_alive():
+        return
     button_start.config(text="Стоп", command=stop_search)
-    threading.Thread(target=search_background).start()
+    search_thread = threading.Thread(target=search_files)
+    search_thread.start()
 
 
 def stop_search():
-    # Остановка поиска - необходимо при использовании многопоточности
+    global searching
+    searching = False
     button_start.config(text="Начать", command=start_search)
 
 
-def search_background():
-    search_files(keywords_list)
-    button_start.config(text="Начать", command=start_search)
+def on_closing():
+    if search_thread and search_thread.is_alive():
+        stop_search()
+        # Повторная попытка закрыть окно через 100 миллисекунд
+        root.after(100, on_closing)
+    else:
+        root.destroy()
 
 
 # Создание главного окна
@@ -80,6 +88,9 @@ status_var = tk.StringVar()
 status_label = tk.Label(frame_bottom, textvariable=status_var,
                         bd=1, relief=tk.SUNKEN, anchor=tk.W)
 status_label.pack(fill=tk.X)
+
+# Обработчик закрытия окна
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Запуск основного цикла
 root.mainloop()
